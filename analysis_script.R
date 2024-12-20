@@ -53,3 +53,54 @@ plot(density(customer_data$Annual.Income..k..),
      ylab="Density")
 polygon(density(customer_data$Annual.Income..k..),
         col="#78deb2")
+
+#Customer Spending
+print(summary(customer_data$Spending.Score..1.100.))
+boxplot(customer_data$Spending.Score..1.100.,
+        horizontal = TRUE,
+        col="#dedb78",
+        main="Customer spending score"
+        )
+hist(customer_data$Spending.Score..1.100.,
+     main="HistoGram for Spending Score",
+     xlab="Spending Score Class",
+     ylab="Frequency",
+     col="#4700ed",
+     labels=TRUE)
+
+#Elbow Method
+library(purrr)
+set.seed(247)
+# function to calculate total intra-cluster sum of square 
+icss<-function(k){
+  kmeans(customer_data[,3:5],k,iter.max=100,nstart =100,algorithm = "Lloyd")$tot.withinss
+}
+k.values<-1:10
+icss_values<-map_dbl(k.values, icss)
+plot(k.values, icss_values,
+     type="b", pch = 19, frame = FALSE, 
+     xlab="Number of clusters K",
+     ylab="Total intra-clusters sum of squares")
+
+#Sillhoute method
+library(cluster) 
+library(gridExtra)
+library(grid)
+k2<-kmeans(customer_data[,3:5],2,iter.max=100,nstart=50,algorithm="Lloyd")
+s2<-plot(silhouette(k2$cluster,dist(customer_data[,3:5],"euclidean")))
+
+k3<-kmeans(customer_data[,3:5],3,iter.max=100,nstart=50,algorithm="Lloyd")
+s3<-plot(silhouette(k3$cluster,dist(customer_data[,3:5],"euclidean")))
+
+k4<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s4<-plot(silhouette(k4$cluster,dist(customer_data[,3:5],"euclidean")))
+
+library(NbClust)
+library(factoextra)
+fviz_nbclust(customer_data[,3:5],kmeans,method = "silhouette")
+
+set.seed(125)
+stat_gap <- clusGap(customer_data[,3:5], FUN = kmeans, nstart = 25,
+                    K.max = 10, B = 50)
+fviz_gap_stat(stat_gap)
+
