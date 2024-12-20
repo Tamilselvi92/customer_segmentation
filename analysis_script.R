@@ -95,12 +95,24 @@ s3<-plot(silhouette(k3$cluster,dist(customer_data[,3:5],"euclidean")))
 k4<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
 s4<-plot(silhouette(k4$cluster,dist(customer_data[,3:5],"euclidean")))
 
-library(NbClust)
-library(factoextra)
-fviz_nbclust(customer_data[,3:5],kmeans,method = "silhouette")
+k5<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s5<-plot(silhouette(k5$cluster,dist(customer_data[,3:5],"euclidean")))
 
-set.seed(125)
-stat_gap <- clusGap(customer_data[,3:5], FUN = kmeans, nstart = 25,
-                    K.max = 10, B = 50)
-fviz_gap_stat(stat_gap)
+k6<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s6<-plot(silhouette(k6$cluster,dist(customer_data[,3:5],"euclidean")))
+
+k7<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s7<-plot(silhouette(k7$cluster,dist(customer_data[,3:5],"euclidean")))
+
+k8<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s8<-plot(silhouette(k8$cluster,dist(customer_data[,3:5],"euclidean")))
+
+k9<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s9<-plot(silhouette(k9$cluster,dist(customer_data[,3:5],"euclidean")))
+
+k10<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
+s10<-plot(silhouette(k10$cluster,dist(customer_data[,3:5],"euclidean")))
+
+
+fviz_nbclust(customer_data[,3:5], kmeans, method = "silhouette")
 
