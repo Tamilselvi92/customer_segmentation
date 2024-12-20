@@ -1,2 +1,12 @@
 # customer segmentation
-read.csv("C:\Users\tamil\Desktop\Git_hub_project\customer_segmentation\Mall_Customers.csv")
+customer_data=read.csv("C:/Users/tamil/Desktop/Git_hub_project/customer_segmentation/Mall_Customers.csv")
+print(str(customer_data))
+print(head(customer_data))
+print(names(customer_data))
+print(summary(customer_data$Age))
+print("Age")
+print(sd(customer_data$Age))
+print(summary(customer_data$Annual.Income..k..))
+print(sd(customer_data$Annual.Income..k..))
+print(summary(customer_data$Spending.Score..1.100.))
+print(sd(customer_data$Spending.Score..1.100.))
