@@ -36,3 +36,23 @@ The Dataset used for this project is the <a href="https://www.kaggle.com/dataset
  | Annual Income | This Feature illustrates the Annual Income of Customers in Thousands |
  | Spending Score | This is a feature in which a special spending score is assinged to each customer based on his/her buying behaviour and net spend |
  
+### Algorithm Used
+
+## K-means Algorithm
+
+While using the k-means clustering algorithm, the first step is to indicate the number of clusters (k) that we wish to produce in the final output. The algorithm starts by selecting k objects from dataset randomly that will serve as the initial centers for our clusters. These selected objects are the cluster means, also known as centroids. Then, the remaining objects have an assignment of the closest centroid. This centroid is defined by the Euclidean Distance present between the object and the cluster mean. We refer to this step as “cluster assignment”. When the assignment is complete, the algorithm proceeds to calculate new mean value of each cluster present in the data. After the recalculation of the centers, the observations are checked if they are closer to a different cluster. Using the updated cluster mean, the objects undergo reassignment. This goes on repeatedly through several iterations until the cluster assignments stop altering. The clusters that are present in the current iteration are the same as the ones obtained in the previous iteration.
+
+# Methods
+
+Elbow Method
+
+Silhouette method
+
+Gap statistic
+
+## Future Scope
+
+The Future Scope of this project will be to built a user friendly web interface using the <a href="https://shiny.rstudio.com/">Shiny Package</a> offered by R Studio. With the help of Shiny we can create really nice looking interfaces for our R project.
+
+
+
