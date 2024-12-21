@@ -1,14 +1,14 @@
-#Customer Segmentation
+Customer Segmentation
 
-##_Project Introduction:_
+Project Introduction:
 This machine learning project employs K-means clustering, which is the primary approach for clustering unlabelled datasets.
 
-##_Technologies:_
+Technologies:
 
-###_Languages_
+Languages
 R
 
-###_Packages_
-cluster,factoextra,ggplot2,gridExtra,NbClust,plotrix,purrr
+Package_
+cluster, factoextra, ggplot2, gridExtra, NbClust, plotrix, purrr
 
-##_Project Description:_
+Project Description:
