@@ -113,6 +113,73 @@ s9<-plot(silhouette(k9$cluster,dist(customer_data[,3:5],"euclidean")))
 k10<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
 s10<-plot(silhouette(k10$cluster,dist(customer_data[,3:5],"euclidean")))
 
+#Visualize
+silhouette_graph<-fviz_nbclust(customer_data[,3:5], kmeans, method = "silhouette")
+plot(silhouette_graph)
 
-fviz_nbclust(customer_data[,3:5], kmeans, method = "silhouette")
+set.seed(125)
+stat_gap <- clusGap(customer_data[,3:5], FUN = kmeans, nstart = 25,
+                    K.max = 10, B = 50)
+stat_gap_graph<-fviz_gap_stat(stat_gap)
+plot(stat_gap_graph)
+
+#Visualizing the Clustering Results using the First Two Principle Components
+
+#k7
+k7<-kmeans(customer_data[,3:5],7,iter.max=100,nstart=50,algorithm="Lloyd")
+print(k7)
+
+pcclust=prcomp(customer_data[,3:5],scale=FALSE) #principal component analysis
+print(summary(pcclust))
+print(pcclust$rotation[,1:2])
+# Segmenting clusters
+set.seed(86)
+plot(ggplot(customer_data, aes(x =Annual.Income..k.., y = Spending.Score..1.100.)) + 
+  geom_point(stat = "identity", aes(color = as.factor(k7$cluster))) +
+  scale_color_discrete(name=" ",
+                       breaks=c("1", "2", "3", "4", "5","6","7"),
+                       labels=c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5","Cluster 6","cluster 7")) +
+  ggtitle("Segments of Customers based on Annual Income", subtitle = "Using K-means Clustering")
+)
+
+
+
+plot(ggplot(customer_data, aes(x =Spending.Score..1.100., y = Age)) + 
+       geom_point(stat = "identity", aes(color = as.factor(k7$cluster))) +
+       scale_color_discrete(name=" ",
+                            breaks=c("1", "2", "3", "4", "5","6","7"),
+                            labels=c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5","Cluster 6","cluster 7")) +
+       ggtitle("Segments of Customers based on age", subtitle = "Using K-means Clustering")
+)
+
+
+
+kCols=function(vec){cols=rainbow (length (unique (vec)))
+return (cols[as.numeric(as.factor(vec))])}
+digCluster<-k7$cluster; dignm<-as.character(digCluster); # K-means clusters
+plot(pcclust$x[,1:2], col =kCols(digCluster),pch =19,xlab ="K-means",ylab="classes")
+legend("bottomleft",unique(dignm),fill=unique(kCols(digCluster)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
