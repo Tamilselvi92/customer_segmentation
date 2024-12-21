@@ -1,9 +1,9 @@
 # Customer Segmentation
 
-## Project Introduction:
+## Project Introduction
 This machine learning project employs K-means clustering, which is the primary approach for clustering unlabelled datasets.
 
-## Technologies:
+## Technologies
 
 ### Languages
 R
@@ -12,9 +12,9 @@ R
 
 cluster, factoextra, ggplot2, gridExtra, NbClust, plotrix, purrr
 
-## Project Description:
+## Project Description
 
-###About
+### About
 
 Customer Segmentation is the process of division of customer base into several groups of individuals that share a similarity in different ways that are relevant to marketing such as gender, age, interests, and miscellaneous spending habits.
 
