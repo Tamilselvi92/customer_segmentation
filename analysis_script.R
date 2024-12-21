@@ -114,6 +114,8 @@ k10<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
 s10<-plot(silhouette(k10$cluster,dist(customer_data[,3:5],"euclidean")))
 
 #Visualize
+library(NbClust)
+library(factoextra)
 silhouette_graph<-fviz_nbclust(customer_data[,3:5], kmeans, method = "silhouette")
 plot(silhouette_graph)
 
