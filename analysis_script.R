@@ -1,5 +1,8 @@
 # customer segmentation
+
+#Data upload
 customer_data=read.csv("C:/Users/tamil/Desktop/Git_hub_project/customer_segmentation/Mall_Customers.csv")
+# To get the summary of Data
 print(str(customer_data))
 print(head(customer_data))
 print(names(customer_data))
@@ -11,26 +14,26 @@ print(sd(customer_data$Annual.Income..k..))
 print(summary(customer_data$Spending.Score..1.100.))
 print(sd(customer_data$Spending.Score..1.100.))
 
+#Visualizations
 
-# Customer Gender Visualization
+# Gender wise 
 a= table(customer_data$Gender)
-barplot(a,main="Gender",
+barplot(a,main="Gender wise comparison",
         ylab="count",
-        xlab="Gender comparison",
+        xlab="Gender",
         col=rainbow(2),
         legend=rownames(a))
 
-#Visualize a pie chart to observe the ratio of male and female distribution
+#Using a pie chart to observe the ratio of male and female distribution
 pct=round(a/sum(a)*100)
 lbs=paste(c("Female","Male")," ",pct,"%",sep="")
 library(plotrix)
 pie3D(a,labels=lbs,main="Male Vs Female ratio")
 
-# Analyzing Age wise trends
-
+# Age wise 
 hist(customer_data$Age,
      col="pink",
-     main="Agewise trends",
+     main="Age wise Comparison",
      xlab="Age Class",
      ylab="Frequency",
      labels=TRUE)
@@ -39,13 +42,15 @@ boxplot(customer_data$Age,
         col="pink",
         main="Boxplot for Descriptive Analysis of Age")
 
-#Analyzing Annual Income wise trends
+# Annual Income wise comparison
+
 hist(customer_data$Annual.Income..k..,
      col="brown",
      main="Histogram for Annual Income",
      xlab="Annual Income Class",
      ylab="Frequency",
      labels=TRUE)
+
 plot(density(customer_data$Annual.Income..k..),
      col="#78deb2",
      main="Density Plot for Annual Income",
@@ -54,7 +59,7 @@ plot(density(customer_data$Annual.Income..k..),
 polygon(density(customer_data$Annual.Income..k..),
         col="#78deb2")
 
-#Customer Spending
+#Analyzing the Customer Spending
 print(summary(customer_data$Spending.Score..1.100.))
 boxplot(customer_data$Spending.Score..1.100.,
         horizontal = TRUE,
@@ -68,7 +73,8 @@ hist(customer_data$Spending.Score..1.100.,
      col="#4700ed",
      labels=TRUE)
 
-#Elbow Method
+# Elbow Method 
+
 library(purrr)
 set.seed(247)
 # function to calculate total intra-cluster sum of square 
@@ -82,10 +88,12 @@ plot(k.values, icss_values,
      xlab="Number of clusters K",
      ylab="Total intra-clusters sum of squares")
 
-#Sillhoute method
+# Sillhoute method
 library(cluster) 
 library(gridExtra)
 library(grid)
+
+#Repeating the same steps to get an optimized value
 k2<-kmeans(customer_data[,3:5],2,iter.max=100,nstart=50,algorithm="Lloyd")
 s2<-plot(silhouette(k2$cluster,dist(customer_data[,3:5],"euclidean")))
 
@@ -113,7 +121,7 @@ s9<-plot(silhouette(k9$cluster,dist(customer_data[,3:5],"euclidean")))
 k10<-kmeans(customer_data[,3:5],4,iter.max=100,nstart=50,algorithm="Lloyd")
 s10<-plot(silhouette(k10$cluster,dist(customer_data[,3:5],"euclidean")))
 
-#Visualize
+# Gap statistic
 library(NbClust)
 library(factoextra)
 silhouette_graph<-fviz_nbclust(customer_data[,3:5], kmeans, method = "silhouette")
@@ -134,8 +142,9 @@ print(k7)
 pcclust=prcomp(customer_data[,3:5],scale=FALSE) #principal component analysis
 print(summary(pcclust))
 print(pcclust$rotation[,1:2])
-# Segmenting clusters
-set.seed(86)
+
+# Segmenting the clusters
+set.seed(804)
 plot(ggplot(customer_data, aes(x =Annual.Income..k.., y = Spending.Score..1.100.)) + 
   geom_point(stat = "identity", aes(color = as.factor(k7$cluster))) +
   scale_color_discrete(name=" ",
@@ -158,9 +167,11 @@ plot(ggplot(customer_data, aes(x =Spending.Score..1.100., y = Age)) +
 
 kCols=function(vec){cols=rainbow (length (unique (vec)))
 return (cols[as.numeric(as.factor(vec))])}
-digCluster<-k7$cluster; dignm<-as.character(digCluster); # K-means clusters
+digCluster<-k7$cluster; dignm<-as.character(digCluster); 
+
+# K-means clusters
 plot(pcclust$x[,1:2], col =kCols(digCluster),pch =19,xlab ="K-means",ylab="classes")
-legend("bottomleft",unique(dignm),fill=unique(kCols(digCluster)))
+legend("bottomright",unique(dignm),fill=unique(kCols(digCluster)))
 
 
 
