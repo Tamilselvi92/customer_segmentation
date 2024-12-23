@@ -73,7 +73,7 @@ boxplot(customer_data$Spending.Score..1.100.,
         main="Customer spending score"
         )
 hist(customer_data$Spending.Score..1.100.,
-     main="HistoGram for Spending Score",
+     main="Histogram for Spending Score",
      xlab="Spending Score Class",
      ylab="Frequency",
      col="#4700ed",
@@ -103,6 +103,9 @@ library(gridExtra)
 library(grid)
 
 # Repeating the same steps to get an optimized value
+
+k1<-kmeans(customer_data[,3:5],2,iter.max=100,nstart=50,algorithm="Lloyd")
+s1<-plot(silhouette(k1$cluster,dist(customer_data[,3:5],"euclidean")))
 
 k2<-kmeans(customer_data[,3:5],2,iter.max=100,nstart=50,algorithm="Lloyd")
 s2<-plot(silhouette(k2$cluster,dist(customer_data[,3:5],"euclidean")))
@@ -147,8 +150,8 @@ plot(stat_gap_graph)
 
 # k7
 
-k7<-kmeans(customer_data[,3:5],7,iter.max=100,nstart=50,algorithm="Lloyd")
-print(k7)
+k6<-kmeans(customer_data[,3:5],6,iter.max=100,nstart=50,algorithm="Lloyd")
+print(k6)
 
 pcclust=prcomp(customer_data[,3:5],scale=FALSE) #principal component analysis
 print(summary(pcclust))
@@ -158,20 +161,20 @@ print(pcclust$rotation[,1:2])
 
 set.seed(804)
 plot(ggplot(customer_data, aes(x =Annual.Income..k.., y = Spending.Score..1.100.)) + 
-  geom_point(stat = "identity", aes(color = as.factor(k7$cluster))) +
+  geom_point(stat = "identity", aes(color = as.factor(k6$cluster))) +
   scale_color_discrete(name=" ",
-                       breaks=c("1", "2", "3", "4", "5","6","7"),
-                       labels=c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5","Cluster 6","cluster 7")) +
+                       breaks=c("1", "2", "3", "4", "5","6"),
+                       labels=c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5","Cluster 6")) +
   ggtitle("Segments of Customers based on Annual Income", subtitle = "Using K-means Clustering")
 )
 
 
 
 plot(ggplot(customer_data, aes(x =Spending.Score..1.100., y = Age)) + 
-       geom_point(stat = "identity", aes(color = as.factor(k7$cluster))) +
+       geom_point(stat = "identity", aes(color = as.factor(k6$cluster))) +
        scale_color_discrete(name=" ",
-                            breaks=c("1", "2", "3", "4", "5","6","7"),
-                            labels=c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5","Cluster 6","cluster 7")) +
+                            breaks=c("1", "2", "3", "4", "5","6"),
+                            labels=c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5","Cluster 6")) +
        ggtitle("Segments of Customers based on age", subtitle = "Using K-means Clustering")
 )
 
@@ -179,7 +182,7 @@ plot(ggplot(customer_data, aes(x =Spending.Score..1.100., y = Age)) +
 
 kCols=function(vec){cols=rainbow (length (unique (vec)))
 return (cols[as.numeric(as.factor(vec))])}
-digCluster<-k7$cluster; dignm<-as.character(digCluster); 
+digCluster<-k6$cluster; dignm<-as.character(digCluster); 
 
 # K-means clusters
 
