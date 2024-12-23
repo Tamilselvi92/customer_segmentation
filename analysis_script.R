@@ -1,8 +1,10 @@
-# customer segmentation
+# Customer segmentation
 
-#Data upload
+# Data upload
+
 customer_data=read.csv("C:/Users/tamil/Desktop/Git_hub_project/customer_segmentation/Mall_Customers.csv")
 # To get the summary of Data
+
 print(str(customer_data))
 print(head(customer_data))
 print(names(customer_data))
@@ -14,9 +16,10 @@ print(sd(customer_data$Annual.Income..k..))
 print(summary(customer_data$Spending.Score..1.100.))
 print(sd(customer_data$Spending.Score..1.100.))
 
-#Visualizations
+# Visualizations
 
 # Gender wise 
+
 a= table(customer_data$Gender)
 barplot(a,main="Gender wise comparison",
         ylab="count",
@@ -24,13 +27,15 @@ barplot(a,main="Gender wise comparison",
         col=rainbow(2),
         legend=rownames(a))
 
-#Using a pie chart to observe the ratio of male and female distribution
+# Using a pie chart to observe the ratio of male and female distribution
+
 pct=round(a/sum(a)*100)
 lbs=paste(c("Female","Male")," ",pct,"%",sep="")
 library(plotrix)
 pie3D(a,labels=lbs,main="Male Vs Female ratio")
 
 # Age wise 
+
 hist(customer_data$Age,
      col="pink",
      main="Age wise Comparison",
@@ -59,7 +64,8 @@ plot(density(customer_data$Annual.Income..k..),
 polygon(density(customer_data$Annual.Income..k..),
         col="#78deb2")
 
-#Analyzing the Customer Spending
+# Analyzing the Customer Spending
+
 print(summary(customer_data$Spending.Score..1.100.))
 boxplot(customer_data$Spending.Score..1.100.,
         horizontal = TRUE,
@@ -77,7 +83,9 @@ hist(customer_data$Spending.Score..1.100.,
 
 library(purrr)
 set.seed(247)
+
 # function to calculate total intra-cluster sum of square 
+
 icss<-function(k){
   kmeans(customer_data[,3:5],k,iter.max=100,nstart =100,algorithm = "Lloyd")$tot.withinss
 }
@@ -89,11 +97,13 @@ plot(k.values, icss_values,
      ylab="Total intra-clusters sum of squares")
 
 # Sillhoute method
+
 library(cluster) 
 library(gridExtra)
 library(grid)
 
-#Repeating the same steps to get an optimized value
+# Repeating the same steps to get an optimized value
+
 k2<-kmeans(customer_data[,3:5],2,iter.max=100,nstart=50,algorithm="Lloyd")
 s2<-plot(silhouette(k2$cluster,dist(customer_data[,3:5],"euclidean")))
 
@@ -133,9 +143,10 @@ stat_gap <- clusGap(customer_data[,3:5], FUN = kmeans, nstart = 25,
 stat_gap_graph<-fviz_gap_stat(stat_gap)
 plot(stat_gap_graph)
 
-#Visualizing the Clustering Results using the First Two Principle Components
+# Visualizing the Clustering Results using the First Two Principle Components
 
-#k7
+# k7
+
 k7<-kmeans(customer_data[,3:5],7,iter.max=100,nstart=50,algorithm="Lloyd")
 print(k7)
 
@@ -144,6 +155,7 @@ print(summary(pcclust))
 print(pcclust$rotation[,1:2])
 
 # Segmenting the clusters
+
 set.seed(804)
 plot(ggplot(customer_data, aes(x =Annual.Income..k.., y = Spending.Score..1.100.)) + 
   geom_point(stat = "identity", aes(color = as.factor(k7$cluster))) +
@@ -170,6 +182,7 @@ return (cols[as.numeric(as.factor(vec))])}
 digCluster<-k7$cluster; dignm<-as.character(digCluster); 
 
 # K-means clusters
+
 plot(pcclust$x[,1:2], col =kCols(digCluster),pch =19,xlab ="K-means",ylab="classes")
 legend("bottomright",unique(dignm),fill=unique(kCols(digCluster)))
 
